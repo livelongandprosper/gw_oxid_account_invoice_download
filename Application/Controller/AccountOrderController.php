@@ -53,24 +53,25 @@ class AccountOrderController extends \OxidEsales\Eshop\Application\Controller\Ac
 							$oHeader->setHeader("Pragma: no-cache");
 							$oHeader->setHeader("Expires: 0");
 							$oHeader->sendHeader();
-
-							// TODO: put the pdf file content here
 							Registry::getUtils()->showMessageAndExit(file_get_contents($invoicePdfPath));
 						} else {
 							$oHeader->setHeader('HTTP/1.1 401 Unauthorized');
 							$oHeader->setHeader("Content-Type: text/html");
-							echo "Unauthorized file";
 							$oHeader->sendHeader();
-							exit;
+							Registry::getUtils()->showMessageAndExit("Unauthorized file");
 						}
 					} else {
 						$oHeader->setHeader('HTTP/1.1 401 Unauthorized');
 						$oHeader->setHeader("Content-Type: text/html");
-						echo "Unauthorized order";
 						$oHeader->sendHeader();
-						exit;
+						Registry::getUtils()->showMessageAndExit("Unauthorized order");
 					}
 				}
+			} else {
+				$oHeader->setHeader('HTTP/1.1 401 Unauthorized');
+				$oHeader->setHeader("Content-Type: text/html");
+				$oHeader->sendHeader();
+				Registry::getUtils()->showMessageAndExit("Unauthorized user");
 			}
 		}
 	}
