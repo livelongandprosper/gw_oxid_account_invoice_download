@@ -18,7 +18,9 @@ After you have done install stuff go to shop backend and activate module.
 
 ## Usage
 - Take a look at the module settings (German only for the moment)
-- Upload invoices with a filename pattern to **/out/gw_incoice**
+![Screenshot of Backend Settings](https://raw.githubusercontent.com/livelongandprosper/gw_oxid_account_invoice_download/master/_screenshot_settings.jpeg)
+
+- Upload invoices with a correct filename pattern to **/out/gw_incoice**
 
 ## License
 See LICENSE file.
