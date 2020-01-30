@@ -1,6 +1,6 @@
 # Invoice Download in Account
 
-...
+This module for OXID eShop makes it possible to upload invoices which are related to orders and make them available as download for users.
 
 ## Install
 - This module has to be put to the folder
@@ -9,8 +9,16 @@
 - You also have to create a file
 \[shop root\]/modules/gw/**vendormetadata.php**
 
-- add content in composer_add_to_root.json to your global composer.json file and call **composer update --no-dev**
+- add content in composer_add_to_root.json to your global composer.json file and call **composer dumpautoload**
 
-- you have to add the Smarty Block gw_oxid_account_invoice_download_link to template Application/views/[theme]]/tpl/page/account/order.tpl within the order foreach loop
+- you have to add the Smarty Block **gw_oxid_account_invoice_download_link to template** **Application/views/[theme]]/tpl/page/account/order.tpl** within the order foreach loop
 
-After you have done that go to shop backend and activate module.
+## Activate
+After you have done install stuff go to shop backend and activate module.
+
+## Usage
+- Take a look at the module settings (German only for the moment)
+- Upload invoices with a filename pattern to **/out/gw_incoice**
+
+## License
+See LICENSE file.
