@@ -12,6 +12,7 @@ This module for OXID eShop makes it possible to upload invoices which are relate
 - add content in composer_add_to_root.json to your global composer.json file and call **composer dumpautoload**
 
 - you have to add the Smarty Block **gw_oxid_account_invoice_download_link to template** **Application/views/[theme]]/tpl/page/account/order.tpl** within the order foreach loop
+![Screenshot of Backend Settings](https://raw.githubusercontent.com/livelongandprosper/gw_oxid_account_invoice_download/master/_screenshot_addingtplblock.jpeg)
 
 ## Activate
 After you have done install stuff go to shop backend and activate module.
