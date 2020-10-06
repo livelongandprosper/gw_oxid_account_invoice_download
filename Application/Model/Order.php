@@ -38,8 +38,12 @@ class Order extends Order_parent {
 	 * @return bool
 	 */
 	public function isInvoiceDownloadAllowed($filepath) {
-    	$allowed_files = $this->getInvoicePaths();
-		return in_array($filepath, $allowed_files);
+		if($this->oxorder__oxordernr->value) {
+			$allowed_files = $this->getInvoicePaths();
+			return in_array($filepath, $allowed_files);
+		}
+
+		return false;
 	}
 
 	/**
@@ -48,24 +52,27 @@ class Order extends Order_parent {
 	 * @return array|null
 	 */
 	private function getInvoicePaths() {
-    	if($this->_invoicePaths === null) {
-			$config = \OxidEsales\Eshop\Core\Registry::getConfig();
-			$dir = Core\gw_oxid_account_invoice_download::getInvoiceFolderPath();
-			$this->_invoicePaths = array();
+		if($this->_invoicePaths === null) {
+			if('' != $this->oxorder__oxordernr->value) {
+				$config = \OxidEsales\Eshop\Core\Registry::getConfig();
+				$dir = Core\gw_oxid_account_invoice_download::getInvoiceFolderPath();
+				$this->_invoicePaths = array();
 
-			// get all files with pattern
-			if($glob_pattern = $config->getConfigParam('gw_invoice_glob_pattern')) {
-				if(strstr($glob_pattern, '[ordernr]') !== false) {
-					$this->_invoicePaths = glob($dir. str_replace('[ordernr]', $this->oxorder__oxordernr->value, $glob_pattern));
+				// get all files with pattern
+				if($glob_pattern = $config->getConfigParam('gw_invoice_glob_pattern')) {
+					if(strstr($glob_pattern, '[ordernr]') !== false) {
+						$this->_invoicePaths = glob($dir. str_replace('[ordernr]', $this->oxorder__oxordernr->value, $glob_pattern));
+					} else {
+						$logger = Registry::getLogger();
+						$logger->error('There has to be an correct pattern gw_invoice_glob_pattern to correctly identify user invoices', [__CLASS__, __FUNCTION__]);
+					}
 				} else {
-					$logger = Registry::getLogger();
-					$logger->error('There has to be an correct pattern gw_invoice_glob_pattern to correctly identify user invoices', [__CLASS__, __FUNCTION__]);
+					$this->_invoicePaths = glob($dir.'*_'.$this->oxorder__oxordernr->value.'.pdf');
 				}
 			} else {
-				$this->_invoicePaths = glob($dir.'*_'.$this->oxorder__oxordernr->value.'.pdf');
+				$this->_invoicePaths = array();
 			}
 		}
-
 		return $this->_invoicePaths;
 	}
 }
